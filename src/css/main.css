@@ -1,0 +1,11 @@
+#sidebar {
+  height: 100vh;
+  grid-area: sidebar;
+}
+#content {
+  grid-area: content;
+}
+body {
+  display: grid;
+  grid-template: "sidebar content" / 290px 1fr;
+}

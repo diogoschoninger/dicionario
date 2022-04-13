@@ -17,10 +17,12 @@
     $nome_usuario = mysqli_real_escape_string( $conn, $_POST["nome_usuario"] );
     $cpf          = mysqli_real_escape_string( $conn, $_POST["cpf"] );
     $email        = mysqli_real_escape_string( $conn, $_POST["email"] );
-    $data_nasc        = mysqli_real_escape_string( $conn, $_POST["data_nasc"] );
+    $data_nasc    = mysqli_real_escape_string( $conn, $_POST["data_nasc"] );
     $senha        = mysqli_real_escape_string( $conn, $_POST["senha"] );
 
-    $result = $conn->query("INSERT INTO usuario (cpf, email, data_nasc, nome_usuario, senha, nivel, id_responsavel) VALUES ('{$cpf}', '{$email}', {$data_nasc}, '{$nome_usuario}', md5('{$senha}'), 2, " . $_SESSION["id_usuario"] . ")");
+    $result = $conn->query("INSERT INTO usuario (nome_usuario, data_nasc, email, cpf, senha, nivel, primeiro_acesso, id_responsavel, foto) VALUES ('$nome_usuario', $data_nasc, '$email', '$cpf', md5('$senha'), 2, 1, " . $_SESSION["id_usuario"] . ");");
+
+    var_dump($conn->error);
 
     if ( $conn->errno === 1062 ) {
       if ( $conn->error === "Duplicate entry '{$email}' for key 'email'") {

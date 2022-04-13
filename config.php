@@ -6,7 +6,7 @@
   define( "DB_PASS", "" );
   define( "DB_NAME", "" );
 
-  define( "BASE_URL", "/~diogo/" );
+  define( "BASE_URL", "/dicionario/" );
   define( "ABS_PATH" , dirname(__FILE__) . "/" );
   define( "TEMPLATE_HEADER", ABS_PATH . "src/templates/header.php" );
   define( "TEMPLATE_FOOTER", ABS_PATH . "src/templates/footer.php" );

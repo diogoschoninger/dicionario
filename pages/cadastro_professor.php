@@ -20,7 +20,7 @@
     $data_nasc    = mysqli_real_escape_string( $conn, $_POST["data_nasc"] );
     $senha        = mysqli_real_escape_string( $conn, $_POST["senha"] );
 
-    $result = $conn->query("INSERT INTO usuario (nome_usuario, data_nasc, email, cpf, senha, nivel, primeiro_acesso, id_responsavel, foto) VALUES ('$nome_usuario', $data_nasc, '$email', '$cpf', md5('$senha'), 2, 1, " . $_SESSION["id_usuario"] . ");");
+    $result = $conn->query("INSERT INTO usuario (nome_usuario, data_nasc, email, cpf, senha, nivel, primeiro_acesso, id_responsavel) VALUES ('$nome_usuario', '$data_nasc', '$email', '$cpf', md5('$senha'), 2, 1, " . $_SESSION["id_usuario"] . ");");
 
     var_dump($conn->error);
 

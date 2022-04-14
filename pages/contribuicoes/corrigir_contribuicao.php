@@ -41,11 +41,11 @@
 
       $nome_imagem = md5(uniqid()) . "." . $extensao[1];
       
-      $caminho_absoluto_imagem = str_replace("\\", "/", ABS_PATH) . "public/img/contribuicoes/" . $nome_imagem;
+      $caminho_absoluto_imagem = str_replace("\\", "/", ABS_PATH) . "src/img/contribuicoes/" . $nome_imagem;
       
       move_uploaded_file($exemplos["tmp_name"][$i], $caminho_absoluto_imagem);
 
-      $caminho_base_imagem = "public/img/contribuicoes/" . $nome_imagem;
+      $caminho_base_imagem = "src/img/contribuicoes/" . $nome_imagem;
 
       if ( $i < count($exemplos["name"]) - 1 ) $query .= $caminho_base_imagem . " ";
       else $query .= $caminho_base_imagem;

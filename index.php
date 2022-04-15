@@ -20,58 +20,33 @@
   } else $pesquisa = false;
 ?>
 
-<?php if (!$pesquisa) : ?>
-  <script>
-    var div = document.getElementById('content')
-    div.classList.remove('p-3')
-  </script>
-<?php endif ?>
+<form action="" method="post" class="row g-0 gap-3 mx-auto col">
+  <input type="text" class="form-control col" placeholder="Pesquise por uma palavra" name="busca" value="<?php if (isset($_POST["busca"])) echo $_POST["busca"] ?>">
+  <button class="btn btn-primary col-auto" type="submit" name="acao" value="buscar">Buscar</button>
+</form>
 
-<div class="container">
-  <div class="row d-flex align-items-center" style="height: 100vh">
-    <form action="" method="post" class="form-inline d-flex justify-content-center">
-      <input type="text" class="form-control me-2 w-25" placeholder="Pesquise por uma palavra" name="busca" value="<?php if (isset($_POST["busca"])) echo $_POST["busca"] ?>">
-      <button class="btn btn-primary" type="submit" name="acao" value="buscar">Buscar</button>
-    </form>
-  </div>
+<?php if ($pesquisa) : ?>
+  <?php if ($sem_contribuicoes) : ?>
+    <div class='alert alert-secondary text-center'>Não foram encontrados resultados para "<?php echo $busca ?>"</div>
+  <?php else : ?>
+    <h1 class="h2 text-center">Resultados encontrados para "<?php echo $busca ?>"</h1>
 
-  <?php if ($pesquisa) : ?>
-    <script>
-      var div = document.querySelector('div#content div.container div.row')
-      div.classList.remove('align-items-center')
-      div.style = '';
-    </script>
-
-    <div class="mt-3">
-      <?php if (!$sem_contribuicoes) : ?>
-        <h1 class="fs-2 text-center">Resultados encontrados para "<?php echo $busca ?>"</h1>
-      <?php endif ?>
-
-      <?php if ($sem_contribuicoes) : ?>
-        <p class='fs-5 mt-3 text-center'>Não foram encontrados resultados para "<?php echo $busca ?>"</p>
-      <?php else : ?>
-        <table class="table table-sm">
-          <tbody>
-            <?php while ($contribuicao = $result->fetch_object()) : ?>
-              <?php
-                $result2 = $conn->query("SELECT nome_usuario FROM usuario WHERE id_usuario = $contribuicao->id_autor");
-                $usuario = $result2->fetch_object();
-              ?>
-              <tr>
-                <td>
-                  <a href="<?php echo BASE_URL ?>pages/contribuicoes/detalhes_contribuicao.php?id_contribuicao=<?php echo $contribuicao->id_contribuicao ?>" class="nav-link px-0">
-                    <span class="fw-bold"><?php echo $contribuicao->contribuicao ?></span><br/>
-                  </a>
-                  <span><?php echo $contribuicao->significados ?></span><br/>
-                  <span>Por: <a href="<?php echo BASE_URL ?>pages/user/perfil.php?id_usuario=<?php echo $contribuicao->id_autor ?>" class="nav-link d-inline px-0"><?php echo $usuario->nome_usuario ?></a></span>
-                </td>
-              </tr>
-            <?php endwhile ?>
-          </tbody>
-        </table>
-      <?php endif ?>
+    <div class="row g-0 gap-3">
+      <?php while ($contribuicao = $result->fetch_object()) : ?>
+        <?php
+          $result2 = $conn->query("SELECT nome_usuario FROM usuario WHERE id_usuario = $contribuicao->id_autor");
+          $usuario = $result2->fetch_object();
+        ?>
+        <div>
+          <a href="<?php echo BASE_URL ?>pages/contribuicoes/detalhes_contribuicao.php?id_contribuicao=<?php echo $contribuicao->id_contribuicao ?>" class="nav-link p-0 m-0">
+            <span class="fw-bold"><?php echo $contribuicao->contribuicao ?></span><br/>
+          </a>
+          <span><?php echo $contribuicao->significados ?></span><br/>
+          <span>Por: <a href="<?php echo BASE_URL ?>pages/user/perfil.php?id_usuario=<?php echo $contribuicao->id_autor ?>" class="nav-link d-inline p-0"><?php echo $usuario->nome_usuario ?></a></span>
+        </div>
+      <?php endwhile ?>
     </div>
   <?php endif ?>
-</div>
+<?php endif ?>
 
 <?php require_once TEMPLATE_FOOTER ?>

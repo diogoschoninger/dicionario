@@ -6,7 +6,5 @@ Encontra-se em uso [neste endereço](http://inf2.fw.iffarroupilha.edu.br/diciona
 
 <hr>
 
-## Log da versão 1.1.0
-- Adicionado barra de navegação horizontal substituindo a barra lateral vertical;
-- Adicionado layout responsivo à página de pesquisas;
-- Adicionado rodapé contendo a versão atual e créditos ao desenvolvedor.
+## Log da versão 1.1.1
+- Corrigido erro na exibição da foto de perfil do usuário.

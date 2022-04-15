@@ -81,7 +81,7 @@
 
 <div>
   <div class="row justify-content-center">
-    <img src="<?php if($usuario["foto"]) echo BASE_URL . $usuario["foto"]; else echo IMG_DEFAULT ?>" style="width: 200px; height: 200px" class="p-0 rounded-circle border border-1 border-dark mb-3">
+    <img src="<?php if($usuario["foto"]) echo BASE_URL . $usuario["foto"]; else echo IMG_DEFAULT ?>" style="width: 200px; height: 200px; object-fit: cover" class="p-0 rounded-circle border border-1 border-dark mb-3">
   </div>
   <div class="row justify-content-center">
     <h1 class="fs-2 text-center"><?php echo $usuario["nome_usuario"] ?></h1>

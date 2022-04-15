@@ -40,7 +40,7 @@
           <?php if ( isset( $_SESSION["id_usuario"] ) ) : ?>
             <div class="nav-item dropdown">
               <a href="<?php echo BASE_URL ?>" class="nav-link dropdown-toggle p-1" id="dropdownUserSidebar" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="<?php if($_SESSION["foto"]) echo BASE_URL . $_SESSION["foto"]; else echo IMG_DEFAULT ?>" width="32" height="32" class="rounded-circle">
+                <img src="<?php if($_SESSION["foto"]) echo BASE_URL . $_SESSION["foto"]; else echo IMG_DEFAULT ?>" style="width: 32px; height: 32px; object-fit: cover" class="rounded-circle">
               </a>
               <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUserSidebar">
                 <li><a class="dropdown-item" href="<?php echo BASE_URL ?>pages/user/perfil.php">Perfil</a></li>

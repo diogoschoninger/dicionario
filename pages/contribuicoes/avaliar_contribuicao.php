@@ -90,7 +90,7 @@
         
         for ($i = 0; $i < count($exemplos); $i++) :
       ?>
-        <img src="<?php echo BASE_URL . $exemplos[$i] ?>" width="200px" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $i ?>">
+        <img src="<?php echo BASE_URL . $exemplos[$i] ?>"  style="width: 200px; height: 200px; object-fit: contain; cursor: pointer" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $i ?>">
         <div class="modal fade" id="exampleModal<?php echo $i ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-xl">
             <div class="modal-content">

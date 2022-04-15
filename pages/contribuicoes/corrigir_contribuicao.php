@@ -33,7 +33,7 @@
 
     for ( $i = 0; $i < count($exemplos["name"]); $i++ ) {
       if (!preg_match("/^image\/(pjpeg|jpeg|png|gif|bmp)$/", $exemplos["type"][$i])) {
-        echo "<script>document.write('<div class=\'alert alert-danger\'>Os arquivos selecionados não são imagens!</div>')</script>";
+        echo "<script>document.write('<div class=\'alert alert-danger m-0\'>Os arquivos selecionados não são imagens!</div>')</script>";
         exit();
       }
       
@@ -52,6 +52,12 @@
     }
 
     $query .= "' WHERE id_contribuicao = " . $id_contribuicao . " AND id_autor = " . $_SESSION["id_usuario"] . ";";
+
+    $result = $conn->query("SELECT exemplos FROM contribuicao WHERE id_contribuicao = " . $id_contribuicao . " AND id_autor = " . $_SESSION["id_usuario"]);
+    $old_exemplos = explode(" ", $result->fetch_object()->exemplos);
+    for ($i = 0; $i < count($old_exemplos); $i++) {
+      unlink(str_replace("\\", "/", ABS_PATH) . $old_exemplos[$i]);
+    }
     
     $result = $conn->query($query);
     
@@ -59,7 +65,7 @@
       echo $conn->errno . "<br>";
       echo $conn->error;
     } else {
-      echo "<script>document.write('<div class=\'alert alert-success\'>Contribuição enviada para correção!</div>')</script>";
+      echo "<script>document.write('<div class=\'alert alert-success m-0\'>Contribuição enviada para correção!</div>')</script>";
       unset($_POST);
     }
 

@@ -38,33 +38,31 @@
   }
 ?>
 
-<div class="h-100 d-flex flex-column justify-content-center align-items-center">
-  <span class="fs-2 text-center mb-3">Login</span>
+<div class="row g-0 gap-3 mx-auto col-sm-10">
+  <div class="row g-0">
+    <span class="fs-2 text-center">Login</span>
+  </div>
 
   <?php
     if ( isset( $_GET["e"] ) ) {
       $erro = $_GET["e"];
       if ( $erro == 1 ) {
-        echo "<div class='alert alert-danger py-1 m-0'>Credenciais incorretas!</div>";
+        echo "<div class='alert alert-danger m-0'>Credenciais incorretas!</div>";
       }
     }
   ?>
 
-  <form action="./login.php" method="post" class="col-3 rounded p-3 mb-3 shadow-sm">
-    <div class="mb-3">
-      <label class="mb-1 fs-5">CPF</label>
+  <form action="./login.php" method="post" class="row g-0 gap-3 p-3 rounded shadow">
+    <div class="row g-0 gap-2">
+      <label class="fs-5">CPF</label>
       <input class="form-control" type="number" name="cpf">
     </div>
-    <div class="mb-3">
-      <label class="mb-1 fs-5">Senha</label>
+    <div class="row g-0 gap-2">
+      <label class="fs-5">Senha</label>
       <input class="form-control" type="password" name="senha">
     </div>
-    <button type="submit" class="btn w-100 btn-primary fs-5">Entrar</button>
+    <button type="submit" class="btn btn-primary fs-5">Entrar</button>
   </form>
-
-  <!-- <div class="col-2 rounded p-3 shadow-sm">
-    Novo por aqui? <a>Crie uma conta</a>
-  </div> -->
 </div>
 
 <?php require_once TEMPLATE_FOOTER ?>

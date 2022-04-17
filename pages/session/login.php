@@ -38,7 +38,7 @@
   }
 ?>
 
-<div class="row g-0 gap-3 mx-auto col-sm-10">
+<div class="row g-0 gap-3 mx-auto col-sm-7 col-md-5 col-lg-4 col-xl-3 col-xxl-3">
   <div class="row g-0">
     <span class="fs-2 text-center">Login</span>
   </div>

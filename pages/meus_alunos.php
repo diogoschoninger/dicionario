@@ -20,13 +20,14 @@
 ?>
   <div class="row g-0 gap-3 mx-auto col-md-9 col-lg-7 col-xl-6 col-xxl-5">
     <?php while ($usuario = $result->fetch_object()) : ?>
-      <div class="row g-0 gap-3">
-        <img src="<?php echo BASE_URL; echo $usuario->foto ?? "src/img/default.jpg" ?>" class="row g-0 mx-auto col-2 rounded-circle" style="object-fit: cover;">
+      <div class="row g-0 gap-3 justify-content-center">
+        <img src="<?php echo BASE_URL; echo $usuario->foto ?? "src/img/default.jpg" ?>" class="row g-0 rounded-circle" style="object-fit: cover; width: 5rem; height: 5rem;">
         <div class="row g-0 col d-flex align-content-center">
           <a class="nav-link p-0 row g-0" href="<?php echo BASE_URL ?>pages/user/perfil.php?id_usuario=<?php echo $usuario->id_usuario ?>"><?php echo $usuario->nome_usuario ?></a>
           <span class="row g-0"><?php echo $usuario->email ?></span>
         </div>
       </div>
+      <hr class="m-0"/>
     <?php endwhile ?>
   </div>
 <?php endif ?>

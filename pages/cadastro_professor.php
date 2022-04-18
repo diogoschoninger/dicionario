@@ -20,65 +20,62 @@
     $data_nasc    = mysqli_real_escape_string( $conn, $_POST["data_nasc"] );
     $senha        = mysqli_real_escape_string( $conn, $_POST["senha"] );
 
-    $result = $conn->query("INSERT INTO usuario (nome_usuario, data_nasc, email, cpf, senha, nivel, primeiro_acesso, id_responsavel) VALUES ('$nome_usuario', '$data_nasc', '$email', '$cpf', md5('$senha'), 2, 1, " . $_SESSION["id_usuario"] . ");");
-
-    var_dump($conn->error);
-
-    if ( $conn->errno === 1062 ) {
-      if ( $conn->error === "Duplicate entry '{$email}' for key 'email'") {
-        echo "<script>document.write('<div class=\'alert alert-danger\'>Já existe um professor cadastrado com este email</div>')</script>";
-      } else if ( $conn->error === "Duplicate entry '{$cpf}' for key 'cpf'") {
-        echo "<script>document.write('<div class=\'alert alert-danger\'>Já existe um professor cadastrado com este CPF</div>')</script>";
+    $result = $conn->query("SELECT * FROM usuario WHERE cpf = $cpf");
+    if ($result->num_rows === 1) echo "<div class='alert alert-danger alert-dismissible fade show m-0 mx-auto col-md-9 col-lg-7 col-xl-6 col-xxl-5' role='alert'>Já existe um usuário cadastrado com este CPF<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+    else {
+      $result = $conn->query("SELECT * FROM usuario WHERE email LIKE '$email'");
+      if ($result->num_rows === 1) echo "<div class='alert alert-danger alert-dismissible fade show m-0 mx-auto col-md-9 col-lg-7 col-xl-6 col-xxl-5' role='alert'>Já existe um usuário cadastrado com este Email<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+      else {
+        $result = $conn->query("INSERT INTO usuario (cpf, email, data_nasc, nome_usuario, senha, nivel, id_responsavel) VALUES ('$cpf', '$email', '$data_nasc', '$nome_usuario', md5('$senha'), 2, " . $_SESSION["id_usuario"] . ")");
+        
+        if ($result) echo "<div class='alert alert-success alert-dismissible fade show m-0 mx-auto col-md-9 col-lg-7 col-xl-6 col-xxl-5' role='alert'>Professor cadastrado com sucesso!<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+        unset($_POST);
       }
-    } else {
-      echo "<script>document.write('<div class=\'alert alert-success\'>Professor cadastrado com sucesso!</div>')</script>";
     }
-    
+
     close_db($conn);
   }
 ?>
 
-<h1 class="fs-2 text-center">Cadastrar novo professor</h1>
+<h1 class="fs-2 text-center m-0">Cadastrar novo professor</h1>
 
-<form action="" method="post" class="container">
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Nome completo</label>
-    <div class="col-10">
+<form action="" method="post" class="row g-0 gap-3 mx-auto col-md-9 col-lg-7 col-xl-6 col-xxl-5">
+  <div class="row g-0">
+    <label>Nome completo</label>
+    <div>
       <input class="form-control" name="nome_usuario" required <?php if (isset($_POST["nome_usuario"])) echo "value=\"" . $_POST["nome_usuario"] . "\"" ?> >
     </div>
   </div>
   
-  <div class="row mb-3">
-    <label class="col-form-label col-2">CPF</label>
-    <div class="col-10">
-      <input class="form-control" type="text" name="cpf" required <?php if (isset($_POST["cpf"])) echo "value=\"" . $_POST["cpf"] . "\"" ?> >
-    </div>
-  </div>
-  
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Email</label>
-    <div class="col-10">
+  <div class="row g-0">
+    <label>Email</label>
+    <div>
       <input class="form-control" name="email" required <?php if (isset($_POST["email"])) echo "value=\"" . $_POST["email"] . "\"" ?> >
     </div>
   </div>
   
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Data de nascimento</label>
-    <div class="col-10">
+  <div class="row g-0 col-sm-6">
+    <label>CPF</label>
+    <div>
+      <input class="form-control" type="text" name="cpf" required <?php if (isset($_POST["cpf"])) echo "value=\"" . $_POST["cpf"] . "\"" ?> >
+    </div>
+  </div>
+  
+  <div class="row g-0 col">
+    <label>Data de nascimento</label>
+    <div>
       <input class="form-control" type="date" name="data_nasc" required <?php if (isset($_POST["data_nasc"])) echo "value=\"" . $_POST["data_nasc"] . "\"" ?> >
     </div>
   </div>
 
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Senha para primeiro acesso</label>
-    <div class="col-10">
+  <div class="row g-0">
+    <label>Senha para primeiro acesso</label>
+    <div>
       <input class="form-control" type="password" name="senha" required <?php if (isset($_POST["senha"])) echo "value=\"" . $_POST["senha"] . "\"" ?> >
     </div>
   </div>
 
-  <div class="row justify-content-center">
-    <button type="submit" class="btn btn-primary w-auto">Cadastrar</button>
-  </div>
+  <button class="btn btn-primary" type="submit">Cadastrar</button>
 </form>
 
 <?php require_once TEMPLATE_FOOTER ?>

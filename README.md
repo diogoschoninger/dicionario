@@ -6,6 +6,9 @@ Encontra-se em uso [neste endereço](http://inf2.fw.iffarroupilha.edu.br/diciona
 
 <hr>
 
-## Log da versão 1.1.2
-- Corrigida visualização dos exemplos das contribuições;
-- Corrigidas regras de armazenagem das fotos de perfil e exemplos de contribuições.
+## Log da versão 1.2.0
+- Adicionado layout responsivo à página de login;
+- Adicionado layout responsivo à página de cadastro de alunos;
+- Adicionado layout responsivo à página de cadastro de professores;
+- Ajustados scripts de cadastros de alunos e professores;
+- Ajustado sistema de feedback no cadastro de alunos e professores.

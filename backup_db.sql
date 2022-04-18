@@ -59,17 +59,18 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `cpf` (`cpf`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 
 -- Copiando dados para a tabela dicionario.usuario: 6 rows
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`id_usuario`, `nome_usuario`, `data_nasc`, `email`, `cpf`, `senha`, `nivel`, `primeiro_acesso`, `id_responsavel`, `foto`) VALUES
 	(1, 'Administrador', '2000-01-01', 'administrador.administrador@instituicao.dominio', '12345678903', 'd9afbf73c5231e8d68c5d22b7e60e52d', 3, 0, 1, 'src/img/perfil/206e36c67717d178c5181a75089c7a42.jpg'),
 	(2, 'Professor', '2000-01-01', 'professor.professor@instituicao.dominio', '12345678902', 'd9afbf73c5231e8d68c5d22b7e60e52d', 2, 0, 1, NULL),
-	(3, 'Aluno', '2000-01-01', 'aluno@email.com', '12345678901', 'd9afbf73c5231e8d68c5d22b7e60e52d', 1, 0, 2, 'src/img/perfil/dc2d99f32ff29fc93d95343ac68d8741.jpg'),
+	(3, 'Aluno', '2000-01-01', 'aluno.aluno@instituicao.dominio', '12345678901', 'd9afbf73c5231e8d68c5d22b7e60e52d', 1, 0, 2, 'src/img/perfil/dc2d99f32ff29fc93d95343ac68d8741.jpg'),
 	(15, 'Professor 2', '2000-01-01', 'professor.professor2@instituicao.dominio', '12345678932', 'd9afbf73c5231e8d68c5d22b7e60e52d', 2, 1, 1, NULL),
 	(13, 'Aluno 2', '2000-01-01', 'aluno.aluno2@instituicao.dominio', '12345678912', 'd9afbf73c5231e8d68c5d22b7e60e52d', 1, 0, 2, 'src/img/perfil/bfdc5b13b0f10da66c4e2c131c4c1d4f.jpg'),
-	(14, 'Aluno 3', '2000-01-01', 'aluno.aluno3@instituicao.dominio', '12345678913', 'd9afbf73c5231e8d68c5d22b7e60e52d', 1, 1, 2, NULL);
+	(14, 'Aluno 3', '2000-01-01', 'aluno.aluno3@instituicao.dominio', '12345678913', 'd9afbf73c5231e8d68c5d22b7e60e52d', 1, 1, 2, NULL),
+	(16, 'Aluno 4', '2000-01-01', 'aluno.aluno4@instituicao.dominio', '12345678914', 'd9afbf73c5231e8d68c5d22b7e60e52d', 1, 1, 2, NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

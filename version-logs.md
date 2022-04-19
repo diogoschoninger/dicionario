@@ -18,3 +18,6 @@
 - Adicionado layout responsivo à página de perfil do usuário;
 - Ajustadas as regras de cadastros de alunos e professores e seus feedbacks;
 - Ajustadas as regras de edição de perfil e seus feedbacks;
+
+## Log da versão 1.2.1
+- Corrigido erro na atualização de email do usuário.

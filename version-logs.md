@@ -9,3 +9,12 @@
 ## Log da versão 1.1.2
 - Corrigida visualização dos exemplos das contribuições;
 - Corrigidas regras de armazenagem das fotos de perfil e exemplos de contribuições.
+
+## Log da versão 1.2.0
+- Adicionado layout responsivo à página de login;
+- Adicionado layout responsivo à página de cadastro de alunos;
+- Adicionado layout responsivo à página de cadastro de professores;
+- Adicionado layout responsivo à página de listagem dos alunos de determinado professor;
+- Adicionado layout responsivo à página de perfil do usuário;
+- Ajustadas as regras de cadastros de alunos e professores e seus feedbacks;
+- Ajustadas as regras de edição de perfil e seus feedbacks;

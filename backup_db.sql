@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `contribuicao` (
 -- Copiando dados para a tabela dicionario.contribuicao: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `contribuicao` DISABLE KEYS */;
 INSERT INTO `contribuicao` (`id_contribuicao`, `contribuicao`, `silabacao`, `classe_gramatical`, `significados`, `formacao`, `comentarios`, `id_autor`, `exemplos`, `situacao`, `comentarios_avaliador`) VALUES
-	(1, 'Bagual', 'ba.gual', 'Adjetivo', 'Sul do Brasil: que ou o que acabou de ser domado (diz-se, p.ex., de potro)', 'Ba + gual', '', 3, '/src/img/contribuicoes/1b9c1c7eea2d177b8ac13b1c63308f0c.jpg', 'Pendente', ''),
+	(1, 'Bagual', 'ba.gual', 'Adjetivo', 'Sul do Brasil: que ou o que acabou de ser domado (diz-se, p.ex., de potro)', 'Ba + gual', '', 3, '/src/img/contribuicoes/1b9c1c7eea2d177b8ac13b1c63308f0c.jpg', 'Aprovada', ''),
 	(2, 'Gaudério', 'gau.dé.ri.o', 'Adjetivo', 'Indivíduo sem ocupação, ocioso, inativo; vadio, malandro.', 'Gau + dério', '', 3, '/src/img/contribuicoes/1c5ccda39f66802a602acccf074a4fc0.jpg', 'Pendente', ''),
 	(3, 'Bah', 'bah', 'Expressão', 'Sul do Brasil: exprime surpresa, admiração, espanto.', 'Bah', '', 3, '/src/img/contribuicoes/a465ebf85eccda761251c364036031d2.jpg', 'Pendente', ''),
 	(4, 'Baita', 'bai.ta', 'Adjetivo', 'Muito brande; imenso, enorme', 'Bai + ta', '', 3, '/src/img/contribuicoes/aaa4690406be33feea5a9a6dabab7706.jpg', 'Pendente', ''),
@@ -61,10 +61,10 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   UNIQUE KEY `cpf` (`cpf`)
 ) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela dicionario.usuario: 6 rows
+-- Copiando dados para a tabela dicionario.usuario: 7 rows
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`id_usuario`, `nome_usuario`, `data_nasc`, `email`, `cpf`, `senha`, `nivel`, `primeiro_acesso`, `id_responsavel`, `foto`) VALUES
-	(1, 'Administrador', '2000-01-01', 'administrador.administrador@instituicao.dominio', '12345678903', 'd9afbf73c5231e8d68c5d22b7e60e52d', 3, 0, 1, 'src/img/perfil/206e36c67717d178c5181a75089c7a42.jpg'),
+	(1, 'Administrador', '2000-01-01', 'administrador.administrador@instituicao.dominio', '12345678903', 'd9afbf73c5231e8d68c5d22b7e60e52d', 3, 0, 1, 'src/img/perfil/1fb1f89b5ab0c1b5739a3710afe45dbf.jpg'),
 	(2, 'Professor', '2000-01-01', 'professor.professor@instituicao.dominio', '12345678902', 'd9afbf73c5231e8d68c5d22b7e60e52d', 2, 0, 1, NULL),
 	(3, 'Aluno', '2000-01-01', 'aluno.aluno@instituicao.dominio', '12345678901', 'd9afbf73c5231e8d68c5d22b7e60e52d', 1, 0, 2, 'src/img/perfil/dc2d99f32ff29fc93d95343ac68d8741.jpg'),
 	(15, 'Professor 2', '2000-01-01', 'professor.professor2@instituicao.dominio', '12345678932', 'd9afbf73c5231e8d68c5d22b7e60e52d', 2, 1, 1, NULL),

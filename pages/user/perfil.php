@@ -33,53 +33,87 @@
 ?>
 
 <?php
+  // Se o usuário clicar no botão "Editar"
   if (isset($_POST["acao"]) && $_POST["acao"] == "editar") {
     $conn = open_db();
-    if (!empty($_POST["email"])) {
-      $email = mysqli_real_escape_string($conn, $_POST["email"]);
-      $email = str_replace("\"", "'", $email);
-    } else $email = false;
-    if ($_FILES["foto"]["error"][0] == 0) $foto = $_FILES["foto"];
-    else $foto = false;
+    
+    // Filtra a entrada de email
+    $email = mysqli_real_escape_string($conn, $_POST["email"]);
+    $email = str_replace("\"", "'", $email);
+    
+    // Verifica erros no upload de imagem e se foi feito upload de alguma imagem
+    $foto = $_FILES["foto"]["error"][0] == 0 ? $_FILES["foto"] : false;
 
-    if ($email) {
-      $result = $conn->query("UPDATE usuario SET email = '{$email}' WHERE id_usuario = {$_SESSION["id_usuario"]}");
-      if ($result) echo "<div class='alert alert-success alert-dismissible fade show m-0' role='alert'>Email atualizado com sucesso!<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
-      else echo $conn->error;
-    }
+    // Verifica diferenças entre o email cadastrado e o novo email
+    $results = $conn->query("SELECT email FROM usuario WHERE id_usuario = {$_SESSION["id_usuario"]}");
+    $result = $results->fetch_object();
+    if ($email !== $result->email) {
+      $results = $conn->query("UPDATE usuario SET email = $email WHERE id_usuario = {$_SESSION['id_usuario']}");
+      if ($results) {
+        echo "<div class='alert alert-success alert-dismissible fade show m-0' role='alert'>Email atualizado com sucesso!<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+      } else {
+        echo "<div class='alert alert-danger alert-dismissible fade show m-0' role='alert'>" . $results->error . "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+      }
+    } else $email = false;
+
+    // Atualiza a foto de perfil, caso a mesma tenha sido enviada
     if ($foto) {
+      // Verifica se o arquivo enviado é uma imagem
       if (!preg_match("/^image\/(pjpeg|jpeg|png|gif|bmp)$/", $foto["type"][0])) {
-        echo "<div class='alert alert-danger alert-dismissible fade show m-0' role='alert'>O arquivo selecionado não é uma imagem!<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+        echo "<div class='alert alert-danger alert-dismissible fade show m-0' role='alert'>O arquivo enviado não é uma imagem!<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
         exit();
       }
-      $extensao = pathinfo($foto["name"][0], PATHINFO_EXTENSION);
-      $nome_imagem = md5(uniqid()) . "." . $extensao;
-      $caminho_absoluto_imagem = str_replace("\\", "/", ABS_PATH) . "src/img/perfil/" . $nome_imagem;
-      move_uploaded_file($foto["tmp_name"][0], $caminho_absoluto_imagem);
-      $caminho_base_imagem = "src/img/perfil/" . $nome_imagem;
 
-      $result = $conn->query("UPDATE usuario SET foto = '{$caminho_base_imagem}' WHERE id_usuario = {$_SESSION["id_usuario"]}");
-      if ($result) {
+      // Altera o nome da imagem, move para o diretório específico e salva o caminho base para posterior salvamento no banco de dados
+      $ext = pathinfo($foto["name"][0], PATHINFO_EXTENSION);
+      $nome_imagem = md5(uniqid()) . "." . $ext;
+      $image_abs_path = str_replace("\\", "/", ABS_PATH) . "src/img/perfil/" . $nome_imagem;
+      move_uploaded_file($foto["tmp_name"][0], $image_abs_path);
+      $image_base_path = "src/img/perfil/" . $nome_imagem;
+
+      // Faz o salvamento do caminho da imagem no banco de dados
+      $results = $conn->query("UPDATE usuario SET foto = '{$image_base_path}' WHERE id_usuario = {$_SESSION["id_usuario"]}");
+      if ($results) {
+        // Apaga a foto anterior do diretório
         if ($_SESSION["foto"]) unlink(str_replace("\\", "/", ABS_PATH) . $_SESSION["foto"]);
-        $result = $conn->query("SELECT foto FROM usuario WHERE id_usuario = {$_SESSION["id_usuario"]}");
-        $foto_atualizada = $result->fetch_object();
+
+        // Busca o caminho da foto atualizada no banco de dados e atribui às variáveis resposáveis
+        $results = $conn->query("SELECT foto FROM usuario WHERE id_usuario = {$_SESSION["id_usuario"]}");
+        $foto_atualizada = $results->fetch_object();
         $_SESSION["foto"] = $foto_atualizada->foto;
         $usuario["foto"] = $foto_atualizada->foto;
+
+        // Exibe o feedback ao usuário
         echo "<div class='alert alert-success alert-dismissible fade show m-0' role='alert'>Foto de perfil atualizada com sucesso! Faça login novamente para aplicar as mudanças.<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
-      } else echo $conn->error;
+      } else {
+        // Exibe erro caso não seja possível atualizar a foto do usuário
+        echo "<div class='alert alert-danger alert-dismissible fade show m-0' role='alert'>" . $results->error . "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+      }
     }
 
-    if (!$email && !$foto) echo "<div class='alert alert-warning alert-dismissible fade show m-0' role='alert'>Sem dados para atualizar.<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+    if (!$email && !$foto) {
+      echo "<div class='alert alert-secondary alert-dismissible fade show m-0' role='alert'>Sem dados para atualizar.<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+    }
   }
+
+  // Se o usuário clicar no botão "Remover foto"
   if (isset($_POST["acao"]) && $_POST["acao"] == "remover") {
     $conn = open_db();
-    $result = $conn->query("UPDATE usuario SET foto = NULL WHERE id_usuario = {$_SESSION["id_usuario"]}");
-    if ($result) {
+
+    // Adiciona NULL à coluna foto no banco de dados
+    $results = $conn->query("UPDATE usuario SET foto = NULL WHERE id_usuario = {$_SESSION["id_usuario"]}");
+    if ($results) {
+      // Em caso de sucesso no update, apaga o arquivo da foto removida e atribui NULL às variáveis responsáveis pela foto de perfil
       unlink(str_replace("\\", "/", ABS_PATH) . $_SESSION["foto"]);
       $_SESSION["foto"] = null;
       $usuario["foto"] = null;
+
+      // Exibe o feedback ao usuário
       echo "<div class='alert alert-success alert-dismissible fade show m-0' role='alert'>Foto de perfil removida com sucesso! Faça login novamente para aplicar as mudanças.<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
-    } else echo $conn->error;
+    } else {
+      // Exibe erro caso não seja possível realizar o comando no banco de dados
+      echo "<div class='alert alert-danger alert-dismissible fade show m-0' role='alert'>" . $results->error . "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+    }
   }
 ?>
 
@@ -131,7 +165,7 @@
         <form class="row g-0 gap-3 col-md-9 col-lg-7 col-xl-6 mx-auto" action="" method="post" enctype="multipart/form-data">
           <div class="row g-0">
             <label>Email</label>
-            <input class="form-control" name="email" value="<?php echo $usuario["email"] ?>">
+            <input class="form-control" type="email" required name="email" value="<?php echo $usuario["email"] ?>">
           </div>
           
           <div class="row g-0">

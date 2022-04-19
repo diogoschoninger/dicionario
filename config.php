@@ -10,8 +10,8 @@
   define( "ABS_PATH" , dirname(__FILE__) . "/" );
   define( "TEMPLATE_HEADER", ABS_PATH . "src/templates/header.php" );
   define( "TEMPLATE_FOOTER", ABS_PATH . "src/templates/footer.php" );
-  define( "IMG_DEFAULT", BASE_URL . "src/img/default.jpg" );
-  define( "VERSION", "1.2.1" );
+  define( "IMG_DEFAULT", "src/img/default.jpg" );
+  define( "VERSION", "1.2.2" );
 
   $url_atual = $_SERVER["REQUEST_URI"];
 

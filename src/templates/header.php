@@ -7,8 +7,8 @@
   
   <title>Dicionário de gírias e palavrões</title>
   
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <!-- <link href="<?php echo BASE_URL ?>src/bootstrap/bootstrap.min.css" rel="stylesheet"/> -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
+  <link href="<?php echo BASE_URL ?>src/bootstrap/bootstrap.min.css" rel="stylesheet"/>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -41,7 +41,7 @@
           <?php if ( isset( $_SESSION["id_usuario"] ) ) : ?>
             <div class="nav-item dropdown">
               <a href="<?php echo BASE_URL ?>" class="nav-link dropdown-toggle p-1" id="dropdownUserSidebar" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="<?php if($_SESSION["foto"]) echo BASE_URL . $_SESSION["foto"]; else echo IMG_DEFAULT ?>" style="width: 32px; height: 32px; object-fit: cover" class="rounded-circle">
+                <img src="<?php echo BASE_URL; echo $_SESSION["foto"] ?? IMG_DEFAULT ?>" style="width: 32px; height: 32px; object-fit: cover" class="rounded-circle">
               </a>
               <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUserSidebar">
                 <li><a class="dropdown-item" href="<?php echo BASE_URL ?>pages/user/perfil.php">Perfil</a></li>

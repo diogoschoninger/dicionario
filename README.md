@@ -6,5 +6,5 @@ Encontra-se em uso [neste endereço](http://inf2.fw.iffarroupilha.edu.br/diciona
 
 <hr>
 
-## Log da versão 1.2.1
-- Corrigido erro na atualização de email do usuário.
+## Log da versão 1.2.2
+- Ajuste: inserção de imagem de perfil dos usuários.

@@ -120,7 +120,7 @@
 ?>
 
 <div class="row g-0 gap-3">
-  <img class="row g-0 mx-auto rounded-circle" src="<?php if($usuario["foto"]) echo BASE_URL . $usuario["foto"]; else echo IMG_DEFAULT ?>" style="width: 12rem; height: 12rem; object-fit: cover">
+  <img class="row g-0 mx-auto rounded-circle" src="<?php echo BASE_URL; echo $usuario["foto"] ?? IMG_DEFAULT ?>" style="width: 12rem; height: 12rem; object-fit: cover">
   <h1 class="row g-0 justify-content-center fs-2 m-0"><?php echo $usuario["nome_usuario"] ?></h1>
 </div>
 

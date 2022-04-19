@@ -4,32 +4,42 @@
 ?>
 
 <?php
-  if ( empty($_SESSION) || ( $_SESSION["nivel"] !== "2" && $_SESSION["nivel"] !== "3" ) ) {
+  // Verificação de permissão
+  if (empty($_SESSION) || ($_SESSION["nivel"] !== "2" && $_SESSION["nivel"] !== "3") ) {
     header("Location: " . BASE_URL);
     exit();
   }
 ?>
 
 <?php
-  if ( !empty($_POST) ) {
+  if (!empty($_POST)) {
     $conn = open_db();
 
+    // Filtra as entradas de dados
     $nome_usuario = mysqli_real_escape_string( $conn, $_POST["nome_usuario"] );
-    $cpf          = mysqli_real_escape_string( $conn, $_POST["cpf"] );
     $email        = mysqli_real_escape_string( $conn, $_POST["email"] );
+    $cpf          = mysqli_real_escape_string( $conn, $_POST["cpf"] );
     $data_nasc    = mysqli_real_escape_string( $conn, $_POST["data_nasc"] );
     $senha        = mysqli_real_escape_string( $conn, $_POST["senha"] );
 
-    $result = $conn->query("SELECT * FROM usuario WHERE cpf = $cpf");
-    if ($result->num_rows === 1) echo "<div class='alert alert-danger alert-dismissible fade show m-0 mx-auto col-md-9 col-lg-7 col-xl-6 col-xxl-5' role='alert'>Já existe um usuário cadastrado com este CPF<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+    // Verifica se já existe um usuário com o mesmo CPF cadastrado
+    $results = $conn->query("SELECT * FROM usuario WHERE cpf = $cpf");
+    if ($results->num_rows === 1) echo "<div class='alert alert-danger alert-dismissible fade show m-0' role='alert'>Já existe um usuário cadastrado com este CPF<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
     else {
-      $result = $conn->query("SELECT * FROM usuario WHERE email LIKE '$email'");
-      if ($result->num_rows === 1) echo "<div class='alert alert-danger alert-dismissible fade show m-0 mx-auto col-md-9 col-lg-7 col-xl-6 col-xxl-5' role='alert'>Já existe um usuário cadastrado com este Email<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+      // Verifica se já existe um usuário com o mesmo email cadastrado
+      $results = $conn->query("SELECT * FROM usuario WHERE email LIKE '$email'");
+      if ($results->num_rows === 1) echo "<div class='alert alert-danger alert-dismissible fade show m-0' role='alert'>Já existe um usuário cadastrado com este Email<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
       else {
-        $result = $conn->query("INSERT INTO usuario (cpf, email, data_nasc, nome_usuario, senha, nivel, id_responsavel) VALUES ('$cpf', '$email', '$data_nasc', '$nome_usuario', md5('$senha'), 1, " . $_SESSION["id_usuario"] . ")");
+        // Realiza o cadastro do usuário no banco de dados
+        $results = $conn->query("INSERT INTO usuario (nome_usuario, email, cpf, data_nasc, senha, nivel, id_responsavel) VALUES ('$nome_usuario', '$email',  '$cpf','$data_nasc', md5('$senha'), 1, " . $_SESSION["id_usuario"] . ")");
         
-        if ($result) echo "<div class='alert alert-success alert-dismissible fade show m-0 mx-auto col-md-9 col-lg-7 col-xl-6 col-xxl-5' role='alert'>Aluno cadastrado com sucesso!<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
-        unset($_POST);
+        // Dá o feedback ao usuário
+        if ($results) {
+          echo "<div class='alert alert-success alert-dismissible fade show m-0' role='alert'>Aluno cadastrado com sucesso!<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+          
+          // Apaga os dados existentes em $_POST
+          unset($_POST);
+        } else echo "<div class='alert alert-danger alert-dismissible fade show m-0' role='alert'>" . $conn-> error . "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
       }
     }
     

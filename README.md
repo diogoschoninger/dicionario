@@ -12,6 +12,5 @@ Encontra-se em uso [neste endereço](http://inf2.fw.iffarroupilha.edu.br/diciona
 - Adicionado layout responsivo à página de cadastro de professores;
 - Adicionado layout responsivo à página de listagem dos alunos de determinado professor;
 - Adicionado layout responsivo à página de perfil do usuário;
-- Ajustados scripts de cadastros de alunos e professores;
-- Ajustado sistema de feedback no cadastro de alunos e professores;
-- Ajustadas as regras de edição de perfil, afetando funcionalidade e feedback ao usuário.
+- Ajustadas as regras de cadastros de alunos e professores e seus feedbacks;
+- Ajustadas as regras de edição de perfil e seus feedbacks;

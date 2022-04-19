@@ -4,25 +4,25 @@
 ?>
 
 <?php
-  if ( !isset( $_GET["id_usuario"] ) ) {
-    if ( !isset( $_SESSION["id_usuario"] ) ) {
+  if (!isset($_GET["id_usuario"])) {
+    if (!isset($_SESSION["id_usuario"])) {
       header("Location: " . BASE_URL);
       exit();
     }
-    $usuario["id_usuario"] = $_SESSION["id_usuario"];
+    $usuario["id_usuario"]   = $_SESSION["id_usuario"];
     $usuario["nome_usuario"] = $_SESSION["nome_usuario"];
-    $usuario["foto"] = $_SESSION["foto"];
-    $usuario["data_nasc"] = $_SESSION["data_nasc"];
-    $usuario["email"] = $_SESSION["email"];
-    $usuario["nivel"] = $_SESSION["nivel"];
+    $usuario["data_nasc"]    = $_SESSION["data_nasc"];
+    $usuario["email"]        = $_SESSION["email"];
+    $usuario["foto"]         = $_SESSION["foto"];
+    $usuario["nivel"]        = $_SESSION["nivel"];
     $config = true;
   } else {
     $conn = open_db();
-    $id_usuario = mysqli_real_escape_string( $conn, $_GET["id_usuario"] );
-    $result = $conn->query("SELECT id_usuario, nome_usuario, foto, data_nasc, email, nivel FROM usuario WHERE id_usuario = $id_usuario");
+    $id_usuario = mysqli_real_escape_string($conn, $_GET["id_usuario"]);
+    $result = $conn->query("SELECT id_usuario, nome_usuario, data_nasc, email, foto, nivel FROM usuario WHERE id_usuario = $id_usuario");
     close_db($conn);
 
-    if ( $result->num_rows !== 1 ) {
+    if ($result->num_rows !== 1) {
       header("Location: " . BASE_URL);
       exit();
     } else $usuario = $result->fetch_array();
@@ -83,26 +83,22 @@
   }
 ?>
 
-<div>
-  <div class="row justify-content-center">
-    <img src="<?php if($usuario["foto"]) echo BASE_URL . $usuario["foto"]; else echo IMG_DEFAULT ?>" style="width: 200px; height: 200px; object-fit: cover" class="p-0 rounded-circle border border-1 border-dark mb-3">
-  </div>
-  <div class="row justify-content-center">
-    <h1 class="fs-2 text-center"><?php echo $usuario["nome_usuario"] ?></h1>
-  </div>
+<div class="row g-0 gap-3">
+  <img class="row g-0 mx-auto rounded-circle" src="<?php if($usuario["foto"]) echo BASE_URL . $usuario["foto"]; else echo IMG_DEFAULT ?>" style="width: 12rem; height: 12rem; object-fit: cover">
+  <h1 class="row g-0 justify-content-center fs-2 m-0"><?php echo $usuario["nome_usuario"] ?></h1>
 </div>
 
-<div class="container">
-  <div class="nav nav-tabs justify-content-center mt-3" id="nav-tab" role="tablist">
+<div class="row g-0 gap-3">
+  <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
     <button class="nav-link text-dark active" id="nav-tab-sobre" data-bs-toggle="tab" data-bs-target="#nav-sobre" type="button" role="tab" aria-controls="nav-sobre" aria-selected="false">Sobre</button>
     <?php if ($config) : ?>
       <button class="nav-link text-dark" id="nav-tab-editar" data-bs-toggle="tab" data-bs-target="#nav-editar" type="button" role="tab" aria-controls="nav-editar" aria-selected="false">Editar perfil</button>
     <?php endif ?>
   </div>
 
-  <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade pt-3 show active" id="nav-sobre" role="tabpanel" aria-labelledby="nav-tab-sobre">
-      <table class="table w-auto m-auto">
+  <div class="tab-content col-auto mx-auto" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-sobre" role="tabpanel" aria-labelledby="nav-tab-sobre">
+      <table class="table m-0">
         <tr>
           <th>Nome</th>
           <td><?php echo $usuario["nome_usuario"] ?></td>
@@ -126,34 +122,29 @@
         </tr>
         <tr>
           <th>Email</th>
-          <td><?php echo $usuario["email"] ?></td>
+          <td class="text-break"><?php echo $usuario["email"] ?></td>
         </tr>
       </table>
     </div>
     <?php if($config) : ?>
-      <div class="tab-pane fade pt-3" id="nav-editar" role="tabpanel" aria-labelledby="nav-tab-editar">
-        <form action="" method="post" class="container" enctype="multipart/form-data">
-          <div class="row mb-3">
-            <label class="col-form-label col-2">Email</label>
-            <div class="col-10">
-              <input class="form-control" name="email" value="<?php echo $usuario["email"] ?>">
-            </div>
+      <div class="tab-pane fade" id="nav-editar" role="tabpanel" aria-labelledby="nav-tab-editar">
+        <form class="row g-0 gap-3 col-md-9 col-lg-7 col-xl-6 mx-auto" action="" method="post" enctype="multipart/form-data">
+          <div class="row g-0">
+            <label>Email</label>
+            <input class="form-control" name="email" value="<?php echo $usuario["email"] ?>">
           </div>
           
-          <div class="row mb-3">
-            <label class="col-form-label col-2">Foto de perfil</label>
-            <div class="col">
-              <input class="form-control" type="file" name="foto[]">
-            </div>
-            <div class="col-2">
-              <button type="submit" class="btn btn-danger" name="acao" value="remover">Remover foto</button>
+          <div class="row g-0">
+            <label>Foto de perfil</label>
+            <div class="row g-0 gap-3">
+              <input class="form-control col" type="file" name="foto[]">
+              <button class="btn btn-danger col-auto" type="submit" name="acao" value="remover">Remover foto</button>
             </div>
           </div>
 
-          <div class="row justify-content-center">
-            <button type="submit" class="btn btn-primary w-auto" name="acao" value="editar">Editar</button>
-            <a href="<?php echo BASE_URL ?>pages/user/alterar_senha.php" class="btn btn-primary w-auto ms-2">Alterar senha</a>
-          </div>
+          <a class="row g-0 btn btn-primary" href="<?php echo BASE_URL ?>pages/user/alterar_senha.php">Alterar senha</a>
+
+          <button class="row g-0 btn btn-success" type="submit" name="acao" value="editar">Editar</button>
         </form>
       </div>
     <?php endif ?>

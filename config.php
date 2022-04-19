@@ -11,7 +11,7 @@
   define( "TEMPLATE_HEADER", ABS_PATH . "src/templates/header.php" );
   define( "TEMPLATE_FOOTER", ABS_PATH . "src/templates/footer.php" );
   define( "IMG_DEFAULT", BASE_URL . "src/img/default.jpg" );
-  define( "VERSION", "1.2.0" );
+  define( "VERSION", "1.2.1" );
 
   $url_atual = $_SERVER["REQUEST_URI"];
 

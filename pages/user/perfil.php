@@ -48,11 +48,13 @@
     $results = $conn->query("SELECT email FROM usuario WHERE id_usuario = {$_SESSION["id_usuario"]}");
     $result = $results->fetch_object();
     if ($email !== $result->email) {
-      $results = $conn->query("UPDATE usuario SET email = $email WHERE id_usuario = {$_SESSION['id_usuario']}");
+      $results = $conn->query("UPDATE usuario SET email = '$email' WHERE id_usuario = {$_SESSION['id_usuario']}");
       if ($results) {
+        $usuario["email"] = $email;
+        $_SESSION["email"] = $email;
         echo "<div class='alert alert-success alert-dismissible fade show m-0' role='alert'>Email atualizado com sucesso!<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
       } else {
-        echo "<div class='alert alert-danger alert-dismissible fade show m-0' role='alert'>" . $results->error . "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+        echo "<div class='alert alert-danger alert-dismissible fade show m-0' role='alert'>" . $conn->error . "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
       }
     } else $email = false;
 
@@ -87,7 +89,7 @@
         echo "<div class='alert alert-success alert-dismissible fade show m-0' role='alert'>Foto de perfil atualizada com sucesso! Faça login novamente para aplicar as mudanças.<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
       } else {
         // Exibe erro caso não seja possível atualizar a foto do usuário
-        echo "<div class='alert alert-danger alert-dismissible fade show m-0' role='alert'>" . $results->error . "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+        echo "<div class='alert alert-danger alert-dismissible fade show m-0' role='alert'>" . $conn->error . "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
       }
     }
 

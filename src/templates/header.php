@@ -40,8 +40,13 @@
 
           <?php if ( isset( $_SESSION["id_usuario"] ) ) : ?>
             <div class="nav-item dropdown">
-              <a href="<?php echo BASE_URL ?>" class="nav-link dropdown-toggle p-1" id="dropdownUserSidebar" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="<?php echo BASE_URL; echo $_SESSION["foto"] ?? IMG_DEFAULT ?>" style="width: 32px; height: 32px; object-fit: cover" class="rounded-circle">
+              <a href="<?php echo BASE_URL ?>" class="nav-link dropdown-toggle p-1 gap-2 d-inline-flex align-items-center" id="dropdownUserSidebar" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="<?php echo BASE_URL; echo $_SESSION["foto"] ?? IMG_DEFAULT ?>" style="width: 32px; height: 32px; object-fit: cover" class="rounded-circle"/>
+                <?php
+                  $nome_usuario = explode(" ", $_SESSION["nome_usuario"]);
+                  $last_name = count($nome_usuario);
+                ?>
+                <span class="line-height-auto"><?php echo $nome_usuario[0] . " " . $nome_usuario[$last_name -1] ?></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUserSidebar">
                 <li><a class="dropdown-item" href="<?php echo BASE_URL ?>pages/user/perfil.php">Perfil</a></li>

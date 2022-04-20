@@ -11,4 +11,4 @@ Encontra-se em uso [neste endereço](http://inf2.fw.iffarroupilha.edu.br/diciona
 - Ajuste: adição do nome e sobrenome do usuário na barra de navegação, para contornar a quebra de layout ao ativar o dropdown;
 - Ajuste: centralização do nome usuário na página de perfil;
 - Ajuste: espaçamento do rodapé reduzido;
-- Ajuste: alterado tamanho do formulário de edição de perfil, padronizado ao tamanho dos formulários de cadastro de alunos e professores
+- Ajuste: alterado tamanho do formulário de edição de perfil, padronizado ao tamanho dos formulários de cadastro de alunos e professores.

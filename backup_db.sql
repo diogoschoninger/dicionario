@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 -- Copiando dados para a tabela dicionario.usuario: 7 rows
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`id_usuario`, `nome_usuario`, `email`, `cpf`, `data_nasc`, `senha`, `nivel`, `primeiro_acesso`, `id_responsavel`, `foto`) VALUES
-	(1, 'Diogo Schoninger', 'administrador.administrador@instituicao.dominio', '12345678903', '2000-01-01', 'd9afbf73c5231e8d68c5d22b7e60e52d', 3, 0, 1, 'src/img/perfil/1fb1f89b5ab0c1b5739a3710afe45dbf.jpg'),
+	(1, 'Diogo Segundo Nome Schoninger', 'administrador.administrador@instituicao.dominio', '12345678903', '2000-01-01', 'd9afbf73c5231e8d68c5d22b7e60e52d', 3, 0, 1, 'src/img/perfil/1fb1f89b5ab0c1b5739a3710afe45dbf.jpg'),
 	(2, 'Professor', 'professor.professor@instituicao.dominio', '12345678902', '2000-01-01', 'd9afbf73c5231e8d68c5d22b7e60e52d', 2, 0, 1, NULL),
 	(3, 'Aluno', 'aluno.aluno@instituicao.dominio', '12345678901', '2000-01-01', 'd9afbf73c5231e8d68c5d22b7e60e52d', 1, 0, 2, 'src/img/perfil/dc2d99f32ff29fc93d95343ac68d8741.jpg'),
 	(15, 'Professor 2', 'professor.professor2@instituicao.dominio', '12345678932', '2000-01-01', 'd9afbf73c5231e8d68c5d22b7e60e52d', 2, 1, 1, NULL),

@@ -121,7 +121,7 @@
 
 <div class="row g-0 gap-3">
   <img class="row g-0 mx-auto rounded-circle" src="<?php echo BASE_URL; echo $usuario["foto"] ?? IMG_DEFAULT ?>" style="width: 12rem; height: 12rem; object-fit: cover">
-  <h1 class="row g-0 justify-content-center fs-2 m-0"><?php echo $usuario["nome_usuario"] ?></h1>
+  <h1 class="row g-0 justify-content-center text-center fs-2 m-0"><?php echo $usuario["nome_usuario"] ?></h1>
 </div>
 
 <div class="row g-0 gap-3">
@@ -164,7 +164,7 @@
     </div>
     <?php if($config) : ?>
       <div class="tab-pane fade" id="nav-editar" role="tabpanel" aria-labelledby="nav-tab-editar">
-        <form class="row g-0 gap-3 col-md-9 col-lg-7 col-xl-6 mx-auto" action="" method="post" enctype="multipart/form-data">
+        <form class="row g-0 gap-3 mx-auto col-md-9 col-lg-7 col-xl-6 col-xxl-5" action="" method="post" enctype="multipart/form-data">
           <div class="row g-0">
             <label>Email</label>
             <input class="form-control" type="email" required name="email" value="<?php echo $usuario["email"] ?>">

@@ -1,7 +1,7 @@
     </div>
   </div>
 
-  <div class="navbar navbar-dark bg-dark mt-auto">
+  <div class="navbar navbar-dark bg-dark mt-auto p-0">
     <div class="container text-light d-flex justify-content-between gap-1">
       <div class="mx-auto">Versão: <?php echo VERSION ?></div>
       <div class="mx-auto">Desenvolvido por <a href="https://github.com/diogoschoninger" class="nav-link d-inline p-0" target="_blank">Diogo Schoninger</a></div>

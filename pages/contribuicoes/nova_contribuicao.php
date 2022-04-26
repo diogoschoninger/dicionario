@@ -31,8 +31,8 @@
 
     $exemplos = $_FILES["exemplos"];
 
-    $query = "INSERT INTO contribuicao (contribuicao, silabacao, classe_gramatical, significados, formacao, comentarios, exemplos, id_autor)
-      VALUES ('$contribuicao', '$silabacao', '$classe_gramatical', '$significados', '$formacao', '$comentarios', '";
+    $query = "INSERT INTO contribuicao (contribuicao, silabacao, classe_gramatical, significados, formacao, comentarios, situacao, exemplos, id_autor)
+      VALUES ('$contribuicao', '$silabacao', '$classe_gramatical', '$significados', '$formacao', '$comentarios', 'Pendente', '";
 
     for ( $i = 0; $i < count($exemplos["name"]); $i++ ) {
       if (!preg_match("/^image\/(pjpeg|jpeg|png|gif|bmp)$/", $exemplos["type"][$i])) {

@@ -28,3 +28,6 @@
 - Ajuste: centralização do nome usuário na página de perfil;
 - Ajuste: espaçamento do rodapé reduzido;
 - Ajuste: alterado tamanho do formulário de edição de perfil, padronizado ao tamanho dos formulários de cadastro de alunos e professores.
+
+## Log da versão 1.2.3
+- Correção: erro ao cadastrar nova contribuição.

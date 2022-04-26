@@ -66,17 +66,17 @@
 
 <h1 class="fs-2 text-center m-0">Detalhes de "<?php echo $contribuicao->contribuicao ?>"</h1>
  
-<div class="row g-0 gap-3 col">
+<div class="row g-0 gap-3 col-sm">
   <h2 class="fs-4 m-0">Silabação</h2>
   <input class="p-2" type="text" disabled value="<?php echo $contribuicao->silabacao ?>"/>
 </div>
 
-<div class="row g-0 gap-3 col">
+<div class="row g-0 gap-3 col-sm">
   <h2 class="fs-4 m-0">Classe gramatical</h2>
   <input class="p-2" type="text" disabled value="<?php echo $contribuicao->classe_gramatical ?>"/>
 </div>
 
-<div class="row g-0 gap-3 col-12">
+<div class="row g-0 gap-3">
   <h2 class="fs-4 m-0">Significados</h2>
   <div class="p-2 rounded" style="border: 1px solid rgba(118, 118, 118, 0.3); background-color: rgba(220, 220, 220, 0.3)" type="text" disabled>
     <?php echo $contribuicao->significados ?>
@@ -109,40 +109,37 @@
   </div>
 </div>
 
-<div class="row g-0 gap-3 col">
+<div class="row g-0 gap-3">
   <h2 class="fs-4 m-0">Formação da palavra</h2>
   <input class="p-2" type="text" disabled value="<?php echo $contribuicao->formacao ?>"/>
 </div>
 
-<div class="row mb-3">
-  <h2 class="fs-4">Comentários</h2>
-  <span class="ms-3"><?php echo $contribuicao->comentarios ?></span>
+<div class="row g-0 gap-3">
+  <h2 class="fs-4 m-0">Comentários do autor</h2>
+  <input class="p-2" type="text" disabled value="<?php echo $contribuicao->comentarios ?>"/>
 </div>
 
 <?php
   $conn = open_db();
-
-  $result = $conn->query( "SELECT nome_usuario FROM usuario WHERE id_usuario = $contribuicao->id_autor" );
-  
-  $autor = $result->fetch_object();
-
+  $results = $conn->query("SELECT nome_usuario FROM usuario WHERE id_usuario = $contribuicao->id_autor");
+  $autor = $results->fetch_object();
   close_db($conn);
 ?>
 
-<div class="row">
-  <span>Por: <a href="<?php echo BASE_URL ?>pages/user/perfil.php?id_usuario=<?php echo $contribuicao->id_autor ?>" class="nav-link d-inline px-0"><?php echo $autor->nome_usuario ?></a></span>
+<div class="row g-0">
+  <span>Por: <a class="nav-link d-inline px-0" href="<?php echo BASE_URL ?>pages/user/perfil.php?id_usuario=<?php echo $contribuicao->id_autor ?>"><?php echo $autor->nome_usuario ?></a></span>
 </div>
 
-<hr>
+<hr class="m-0"/>
 
-<form action="" method="post">
-  <div class="row mb-3">
-    <label class="col-form-label">Deixar um comentário</label>
+<form class="row g-0 gap-3" action="" method="post">
+  <div class="row g-0 gap-3">
+    <label class="">Deixar um comentário para o aluno</label>
     <textarea class="form-control" name="comentarios_avaliador"><?php echo $contribuicao->comentarios_avaliador ?></textarea>
   </div>
-  <div class="d-flex justify-content-center">
+  <div class="row g-0 gap-3 justify-content-center">
     <?php if ($contribuicao->situacao !== "Aprovada") : ?>
-      <button class="btn btn-success w-auto me-2" type="submit" name="acao" value="aprovar">Aprovar</button>
+      <button class="btn btn-success w-auto" type="submit" name="acao" value="aprovar">Aprovar</button>
     <?php endif ?>
     <button class="btn btn-danger w-auto" type="submit" name="acao" value="correcao">Solicitar correção</button>
   </div>

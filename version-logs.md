@@ -35,3 +35,6 @@
 ## Log da versão 1.2.4
 - Adição: layout responsivo na página avaliar_contribuicao;
 - Adição: layout responsivo na página detalhes_contribuicao.
+
+## Log da versão 1.2.5
+- Adição: layout responsivo na página "Avaliar contribuições".

@@ -10,138 +10,126 @@
   }
 ?>
 
-<h1 class="fs-2 text-center">Avaliar contribuições</h1>
+<h1 class="fs-2 text-center m-0">Avaliar contribuições</h1>
 
-<div class="container">
-  <div class="nav nav-tabs justify-content-center mt-3" id="nav-tab" role="tablist">
-    <button class="nav-link text-dark active" id="nav-tab-pendentes" data-bs-toggle="tab" data-bs-target="#nav-pendentes" type="button" role="tab" aria-controls="nav-pendentes" aria-selected="true">Pendentes</button>
-    <button class="nav-link text-dark" id="nav-tab-aprovadas" data-bs-toggle="tab" data-bs-target="#nav-aprovadas" type="button" role="tab" aria-controls="nav-aprovadas" aria-selected="false">Aprovadas</button>
-    <button class="nav-link text-dark" id="nav-tab-em-correcao" data-bs-toggle="tab" data-bs-target="#nav-em-correcao" type="button" role="tab" aria-controls="nav-em-correcao" aria-selected="false">Em correção</button>
+<div class="container row g-0 gap-3">
+  <div class="nav nav-tabs row g-0" id="nav-tab" role="tablist">
+    <button class="nav-link text-dark col px-0 active" id="nav-tab-pendentes" data-bs-toggle="tab" data-bs-target="#nav-pendentes" type="button" role="tab" aria-controls="nav-pendentes" aria-selected="true">Pendentes</button>
+    <button class="nav-link text-dark col px-0" id="nav-tab-aprovadas" data-bs-toggle="tab" data-bs-target="#nav-aprovadas" type="button" role="tab" aria-controls="nav-aprovadas" aria-selected="false">Aprovadas</button>
+    <button class="nav-link text-dark col px-0" id="nav-tab-em-correcao" data-bs-toggle="tab" data-bs-target="#nav-em-correcao" type="button" role="tab" aria-controls="nav-em-correcao" aria-selected="false">Em correção</button>
   </div>
 
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-pendentes" role="tabpanel" aria-labelledby="nav-tab-pendentes">
-      <table class="table table-sm">
-        <tbody>
-          <?php
-            $conn = open_db();
-            $result = $conn->query("SELECT id_usuario, nome_usuario FROM usuario WHERE nivel = 1 AND id_responsavel = " . $_SESSION["id_usuario"]);
+      <div class="row g-0 gap-3">
+        <?php
+          $conn = open_db();
 
-            if ($result->num_rows === 0) echo "<p class='fs-5 mt-3 text-center'>Você ainda não é responsável por nenhum aluno</p>";
-            else {
-              $sem_contribuicoes = true;
+          $alunos = $conn->query("SELECT id_usuario, nome_usuario FROM usuario WHERE nivel = 1 AND id_responsavel = " . $_SESSION["id_usuario"]);
 
-              while ($usuarios = $result->fetch_object()) {
-                $result2 = $conn->query("SELECT id_contribuicao, contribuicao, significados, id_autor FROM contribuicao WHERE id_autor = $usuarios->id_usuario AND situacao LIKE 'Pendente'");
+          if ($alunos->num_rows === 0) echo "<div class='alert alert-secondary m-0'>Você não é responsável por nenhum aluno.</div>";
+          else {
+            $sem_contribuicoes = true;
 
-                if ($result2->num_rows !== 0) {
-                  $sem_contribuicoes = false;
+            while ($aluno = $alunos->fetch_object()) {
+              $contribuicoes = $conn->query("SELECT id_contribuicao, contribuicao, significados FROM contribuicao WHERE id_autor = $aluno->id_usuario AND situacao LIKE 'Pendente'");
 
-                  while ($contribuicoes = $result2->fetch_object()) {
-                    echo "
-                    <tr>
-                    <td>
-                    <a href=" . BASE_URL . "pages/contribuicoes/avaliar_contribuicao.php?id_contribuicao=" . $contribuicoes->id_contribuicao . " class=\"nav-link px-0\">
-                    <span class=\"fw-bold\">" . $contribuicoes->contribuicao . "</span><br/>
-                    </a>
-                    <span>" . $contribuicoes->significados . "</span><br/>
-                    <span>Por: <a href=\"" . BASE_URL . "pages/user/perfil.php?id_usuario=" . $contribuicoes->id_autor . "\" class=\"nav-link d-inline px-0\">" . $usuarios->nome_usuario . "</a></span>
-                    </td>
-                    </tr>
-                    ";
-                  }
+              if ($contribuicoes->num_rows !== 0) {
+                $sem_contribuicoes = false;
+
+                while ($contribuicao = $contribuicoes->fetch_object()) {
+                  echo "
+                    <div>
+                      <a href='" . BASE_URL . "pages/contribuicoes/avaliar_contribuicao.php?id_contribuicao=" . $contribuicao->id_contribuicao . "' class='nav-link p-0 m-0'>
+                        <span class='fw-bold'>" . $contribuicao->contribuicao . "</span><br/>
+                      </a>
+                      <span>" . $contribuicao->significados . "</span><br/>
+                      <span>Por: <a href='" . BASE_URL . "pages/user/perfil.php?id_usuario=" . $aluno->id_usuario . "' class='nav-link d-inline p-0'>" . $aluno->nome_usuario . "</a></span>
+                    </div>
+                  ";
                 }
               }
-
-              if ($sem_contribuicoes) echo "<p class='fs-5 mt-3 text-center'>No momento não há contribuições pendentes de aprovação.</p>";
             }
 
-            close_db($conn);
-          ?>
-        </tbody>
-      </table>
+            if ($sem_contribuicoes) echo "<div class='alert alert-secondary m-0'>Não há contribuições para avaliar.</div>";
+          }
+          close_db($conn);
+        ?>
+      </div>
     </div>
     <div class="tab-pane fade" id="nav-aprovadas" role="tabpanel" aria-labelledby="nav-tab-aprovadas">
-      <table class="table table-sm">
-        <tbody>
-          <?php
-            $conn = open_db();
-            $result = $conn->query("SELECT id_usuario, nome_usuario FROM usuario WHERE nivel = 1 AND id_responsavel = " . $_SESSION["id_usuario"]);
+      <div class="row g-0 gap-3">
+        <?php
+          $conn = open_db();
 
-            if ($result->num_rows === 0) echo "<p class='fs-5 mt-3 text-center'>Você ainda não é responsável por nenhum aluno</p>";
-            else {
-              $sem_contribuicoes = true;
+          $alunos = $conn->query("SELECT id_usuario, nome_usuario FROM usuario WHERE nivel = 1 AND id_responsavel = " . $_SESSION["id_usuario"]);
 
-              while ($usuarios = $result->fetch_object()) {
-                $result2 = $conn->query("SELECT id_contribuicao, contribuicao, significados, id_autor FROM contribuicao WHERE id_autor = $usuarios->id_usuario AND situacao LIKE 'Aprovada'");
+          if ($alunos->num_rows === 0) echo "<div class='alert alert-secondary m-0'>Você não é responsável por nenhum aluno.</div>";
+          else {
+            $sem_contribuicoes = true;
 
-                if ($result2->num_rows !== 0) {
-                  $sem_contribuicoes = false;
+            while ($aluno = $alunos->fetch_object()) {
+              $contribuicoes = $conn->query("SELECT id_contribuicao, contribuicao, significados FROM contribuicao WHERE id_autor = $aluno->id_usuario AND situacao LIKE 'Aprovada'");
 
-                  while ($contribuicoes = $result2->fetch_object()) {
-                    echo "
-                    <tr>
-                    <td>
-                    <a href=" . BASE_URL . "pages/contribuicoes/avaliar_contribuicao.php?id_contribuicao=" . $contribuicoes->id_contribuicao . " class=\"nav-link px-0\">
-                    <span class=\"fw-bold\">" . $contribuicoes->contribuicao . "</span><br/>
-                    </a>
-                    <span>" . $contribuicoes->significados . "</span><br/>
-                    <span>Por: <a href=\"" . BASE_URL . "pages/user/perfil.php?id_usuario=" . $contribuicoes->id_autor . "\" class=\"nav-link d-inline px-0\">" . $usuarios->nome_usuario . "</a></span>
-                    </td>
-                    </tr>
-                    ";
-                  }
+              if ($contribuicoes->num_rows !== 0) {
+                $sem_contribuicoes = false;
+
+                while ($contribuicao = $contribuicoes->fetch_object()) {
+                  echo "
+                    <div>
+                      <a href='" . BASE_URL . "pages/contribuicoes/avaliar_contribuicao.php?id_contribuicao=" . $contribuicao->id_contribuicao . "' class='nav-link p-0 m-0'>
+                        <span class='fw-bold'>" . $contribuicao->contribuicao . "</span><br/>
+                      </a>
+                      <span>" . $contribuicao->significados . "</span><br/>
+                      <span>Por: <a href='" . BASE_URL . "pages/user/perfil.php?id_usuario=" . $aluno->id_usuario . "' class='nav-link d-inline p-0'>" . $aluno->nome_usuario . "</a></span>
+                    </div>
+                  ";
                 }
               }
-
-              if ($sem_contribuicoes) echo "<p class='fs-5 mt-3 text-center'>No momento não há contribuições aprovadas.</p>";
             }
 
-            close_db($conn);
-          ?>
-        </tbody>
-      </table>
+            if ($sem_contribuicoes) echo "<div class='alert alert-secondary m-0'>Não há contribuições aprovadas por você.</div>";
+          }
+          close_db($conn);
+        ?>
+      </div>
     </div>
     <div class="tab-pane fade" id="nav-em-correcao" role="tabpanel" aria-labelledby="nav-tab-em-correcao">
-      <table class="table table-sm">
-        <tbody>
-          <?php
-            $conn = open_db();
-            $result = $conn->query("SELECT id_usuario, nome_usuario FROM usuario WHERE nivel = 1 AND id_responsavel = " . $_SESSION["id_usuario"]);
+      <div class="row g-0 gap-3">
+        <?php
+          $conn = open_db();
 
-            if ($result->num_rows === 0) echo "<p class='fs-5 mt-3 text-center'>Você ainda não é responsável por nenhum aluno</p>";
-            else {
-              $sem_contribuicoes = true;
+          $alunos = $conn->query("SELECT id_usuario, nome_usuario FROM usuario WHERE nivel = 1 AND id_responsavel = " . $_SESSION["id_usuario"]);
 
-              while ($usuarios = $result->fetch_object()) {
-                $result2 = $conn->query("SELECT id_contribuicao, contribuicao, significados, id_autor FROM contribuicao WHERE id_autor = $usuarios->id_usuario AND situacao LIKE 'Em correcao'");
+          if ($alunos->num_rows === 0) echo "<div class='alert alert-secondary m-0'>Você não é responsável por nenhum aluno.</div>";
+          else {
+            $sem_contribuicoes = true;
 
-                if ($result2->num_rows !== 0) {
-                  $sem_contribuicoes = false;
+            while ($aluno = $alunos->fetch_object()) {
+              $contribuicoes = $conn->query("SELECT id_contribuicao, contribuicao, significados FROM contribuicao WHERE id_autor = $aluno->id_usuario AND situacao LIKE 'Em correcao'");
 
-                  while ($contribuicoes = $result2->fetch_object()) {
-                    echo "
-                    <tr>
-                    <td>
-                    <a href=" . BASE_URL . "pages/contribuicoes/avaliar_contribuicao.php?id_contribuicao=" . $contribuicoes->id_contribuicao . " class=\"nav-link px-0\">
-                    <span class=\"fw-bold\">" . $contribuicoes->contribuicao . "</span><br/>
-                    </a>
-                    <span>" . $contribuicoes->significados . "</span><br/>
-                    <span>Por: <a href=\"" . BASE_URL . "pages/user/perfil.php?id_usuario=" . $contribuicoes->id_autor . "\" class=\"nav-link d-inline px-0\">" . $usuarios->nome_usuario . "</a></span>
-                    </td>
-                    </tr>
-                    ";
-                  }
+              if ($contribuicoes->num_rows !== 0) {
+                $sem_contribuicoes = false;
+
+                while ($contribuicao = $contribuicoes->fetch_object()) {
+                  echo "
+                    <div>
+                      <a href='" . BASE_URL . "pages/contribuicoes/avaliar_contribuicao.php?id_contribuicao=" . $contribuicao->id_contribuicao . "' class='nav-link p-0 m-0'>
+                        <span class='fw-bold'>" . $contribuicao->contribuicao . "</span><br/>
+                      </a>
+                      <span>" . $contribuicao->significados . "</span><br/>
+                      <span>Por: <a href='" . BASE_URL . "pages/user/perfil.php?id_usuario=" . $aluno->id_usuario . "' class='nav-link d-inline p-0'>" . $aluno->nome_usuario . "</a></span>
+                    </div>
+                  ";
                 }
               }
-
-              if ($sem_contribuicoes) echo "<p class='fs-5 mt-3 text-center'>No momento não há contribuições em correção.</p>";
             }
 
-            close_db($conn);
-          ?>
-        </tbody>
-      </table>
+            if ($sem_contribuicoes) echo "<div class='alert alert-secondary m-0'>Não há contribuições a serem corrigidas pelos alunos.</div>";
+          }
+          close_db($conn);
+        ?>
+      </div>
     </div>
   </div>
 </div>

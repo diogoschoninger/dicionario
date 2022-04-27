@@ -64,7 +64,7 @@
   }
 ?>
 
-<h1 class="fs-2 text-center m-0">Detalhes de "<?php echo $contribuicao->contribuicao ?>"</h1>
+<h1 class="fs-2 text-center m-0">Avaliar "<?php echo $contribuicao->contribuicao ?>"</h1>
  
 <div class="row g-0 gap-3 col-sm">
   <h2 class="fs-4 m-0">Silabação</h2>

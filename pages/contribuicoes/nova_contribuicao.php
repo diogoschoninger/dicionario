@@ -3,9 +3,8 @@
   require_once TEMPLATE_HEADER;
 ?>
 
-
 <?php
-  if ( empty($_SESSION) || $_SESSION["nivel"] != "1" ) {
+  if (empty($_SESSION) || $_SESSION["nivel"] !== "1") {
     header("Location: " . BASE_URL);
     exit();
   }
@@ -31,100 +30,96 @@
 
     $exemplos = $_FILES["exemplos"];
 
-    $query = "INSERT INTO contribuicao (contribuicao, silabacao, classe_gramatical, significados, formacao, comentarios, situacao, exemplos, id_autor)
-      VALUES ('$contribuicao', '$silabacao', '$classe_gramatical', '$significados', '$formacao', '$comentarios', 'Pendente', '";
+    $erro = false;
+    for ($i = 0; $i < count($exemplos["name"]); $i++) {
+      if (!$erro) {
+        if (!preg_match("/^image\/(pjpeg|jpeg|png|gif|bmp)$/", $exemplos["type"][$i])) {
+          echo "<div class='alert alert-danger alert-dismissible fade show m-0' role='alert'>Os arquivos enviados não são imagens!<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+          $erro = true;
+          unset($_FILES);
+        }
+      } else break;
+    }
 
-    for ( $i = 0; $i < count($exemplos["name"]); $i++ ) {
-      if (!preg_match("/^image\/(pjpeg|jpeg|png|gif|bmp)$/", $exemplos["type"][$i])) {
-        echo "<script>document.write('<div class=\'alert alert-danger\'>Os arquivos selecionados não são imagens!</div>')</script>";
-        exit();
+    if (!$erro) {
+      $query = "INSERT INTO contribuicao (contribuicao, silabacao, classe_gramatical, significados, formacao, comentarios, situacao, exemplos, id_autor)
+        VALUES ('$contribuicao', '$silabacao', '$classe_gramatical', '$significados', '$formacao', '$comentarios', 'Pendente', '";
+
+      for ($i = 0; $i < count($exemplos["name"]); $i++) {
+        preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", $exemplos["name"][$i], $extensao);
+
+        $nome_imagem = md5(uniqid()) . "." . $extensao[1];
+        
+        $caminho_absoluto_imagem = str_replace("\\", "/", ABS_PATH) . "src/img/contribuicoes/" . $nome_imagem;
+        
+        move_uploaded_file($exemplos["tmp_name"][$i], $caminho_absoluto_imagem);
+
+        $caminho_base_imagem = "src/img/contribuicoes/" . $nome_imagem;
+
+        if ($i < count($exemplos["name"]) - 1) $query .= $caminho_base_imagem . " ";
+        else $query .= $caminho_base_imagem;
       }
-      
-      preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", $exemplos["name"][$i], $extensao);
 
-      $nome_imagem = md5(uniqid()) . "." . $extensao[1];
+      $query .= "', ". $_SESSION["id_usuario"] . ");";
       
-      $caminho_absoluto_imagem = str_replace("\\", "/", ABS_PATH) . "src/img/contribuicoes/" . $nome_imagem;
+      $results = $conn->query($query);
       
-      move_uploaded_file($exemplos["tmp_name"][$i], $caminho_absoluto_imagem);
+      if (!$results) {
+        echo $conn->errno . "<br>";
+        echo $conn->error;
+      } else {
+        echo "<div class='alert alert-success alert-dismissible fade show m-0' role='alert'>Contribuição enviada para correção!<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+        unset($_POST);
+      }
 
-      $caminho_base_imagem = "src/img/contribuicoes/" . $nome_imagem;
-
-      if ( $i < count($exemplos["name"]) - 1 ) $query .= $caminho_base_imagem . " ";
-      else $query .= $caminho_base_imagem;
+      close_db($conn);
     }
-
-    $query .= "', ". $_SESSION["id_usuario"] . ");";
-    
-    $result = $conn->query($query);
-    
-    if (!$result) {
-      echo $conn->errno . "<br>";
-      echo $conn->error;
-    } else {
-      echo "<script>document.write('<div class=\'alert alert-success\'>Contribuição enviada para correção!</div>')</script>";
-      unset($_POST);
-    }
-
-    close_db($conn);
   }
 ?>
 
-<h1 class="fs-2 text-center">Cadastrar nova gíria/palavrão</h1>
+<h1 class="fs-2 text-center m-0">Cadastrar nova gíria/palavrão</h1>
 
-<form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post" class="container" enctype="multipart/form-data">
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Gíria/palavrão</label>
-    <div class="col-10">
+<form class="row g-0 gap-3" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post" enctype="multipart/form-data">
+  <div class="row g-0 gap-3">
+    <div class="row g-0 col-sm">
+      <label>Gíria/palavrão</label>
       <input class="form-control" name="contribuicao" required <?php if (isset($_POST["contribuicao"])) echo "value=\"" . str_replace("\"", "'", $_POST["contribuicao"]) . "\"" ?> >
     </div>
-  </div>
-  
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Silabação</label>
-    <div class="col-10">
+    
+    <div class="row g-0 col-sm">
+      <label>Silabação</label>
       <input class="form-control" name="silabacao" required <?php if (isset($_POST["silabacao"])) echo "value=\"" . str_replace("\"", "'", $_POST["silabacao"]) . "\"" ?> >
     </div>
   </div>
   
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Classe gramatical</label>
-    <div class="col-10">
+  <div class="row g-0 gap-3">
+    <div class="row g-0 col-md">
+      <label>Classe gramatical</label>
       <input class="form-control" name="classe_gramatical" required <?php if (isset($_POST["classe_gramatical"])) echo "value=\"" . str_replace("\"", "'", $_POST["classe_gramatical"]) . "\"" ?> >
     </div>
-  </div>
-  
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Significados</label>
-    <div class="col-10">
+    
+    <div class="row g-0 col-md">
+      <label>Significados</label>
       <input class="form-control" name="significados" required <?php if (isset($_POST["significados"])) echo "value=\"" . str_replace("\"", "'", $_POST["significados"]) . "\"" ?> >
     </div>
   </div>
 
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Exemplos de uso</label>
-    <div class="col-10">
-      <input class="form-control" type="file" multiple name="exemplos[]" required>
-    </div>
+  <div class="row g-0">
+    <label>Exemplos de uso</label>
+    <input class="form-control" type="file" multiple name="exemplos[]" required>
   </div>
 
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Formação da palavra</label>
-    <div class="col-10">
-      <input class="form-control" name="formacao" required <?php if (isset($_POST["formacao"])) echo "value=\"" . str_replace("\"", "'", $_POST["formacao"]) . "\"" ?> >
-    </div>
+  <div class="row g-0">
+    <label>Formação da palavra</label>
+    <input class="form-control" name="formacao" required <?php if (isset($_POST["formacao"])) echo "value=\"" . str_replace("\"", "'", $_POST["formacao"]) . "\"" ?> >
   </div>
   
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Comentários</label>
-    <div class="col-10">
-      <textarea class="form-control" name="comentarios"><?php if (isset($_POST["comentarios"])) echo str_replace("\"", "'", $_POST["comentarios"]) ?></textarea>
-    </div>
+  <div class="row g-0">
+    <label>Comentários</label>
+    <textarea class="form-control" name="comentarios"><?php if (isset($_POST["comentarios"])) echo str_replace("\"", "'", $_POST["comentarios"]) ?></textarea>
   </div>
 
-  <div class="row justify-content-center">
-    <button type="submit" class="btn btn-primary w-auto">Enviar para correção</button>
-  </div>
+  <button class="btn btn-primary w-auto mx-auto" type="submit">Enviar para correção</button>
 </form>
 
 <?php require_once TEMPLATE_FOOTER ?>

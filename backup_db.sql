@@ -31,18 +31,20 @@ CREATE TABLE IF NOT EXISTS `contribuicao` (
   `situacao` text NOT NULL,
   `comentarios_avaliador` text NOT NULL,
   PRIMARY KEY (`id_contribuicao`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 -- Copiando dados para a tabela dicionario.contribuicao: ~7 rows (aproximadamente)
 /*!40000 ALTER TABLE `contribuicao` DISABLE KEYS */;
 INSERT INTO `contribuicao` (`id_contribuicao`, `contribuicao`, `silabacao`, `classe_gramatical`, `significados`, `formacao`, `comentarios`, `id_autor`, `exemplos`, `situacao`, `comentarios_avaliador`) VALUES
 	(1, 'Bagual', 'ba.gual', 'Adjetivo', 'Sul do Brasil: que ou o que acabou de ser domado (diz-se, p.ex., de potro)', 'Ba + gual', '', 3, '/src/img/contribuicoes/1b9c1c7eea2d177b8ac13b1c63308f0c.jpg', 'Aprovada', ''),
-	(2, 'Gaudério', 'gau.dé.ri.o', 'Adjetivo', 'Indivíduo sem ocupação, ocioso, inativo; vadio, malandro.', 'Gau + dério', '', 3, 'src/img/contribuicoes/cb9e311dea59c0000c3d24a1880f8f7b.jpg', 'Aprovada', 'Bah teu! Agora tá bagual de primeira'),
-	(3, 'Bah', 'bah', 'Expressão', 'Sul do Brasil: exprime surpresa, admiração, espanto.', 'Bah', '', 3, '/src/img/contribuicoes/a465ebf85eccda761251c364036031d2.jpg', 'Aprovada', ''),
+	(2, 'Gaudério', 'gau.dé.ri.o', 'Adjetivo', 'Indivíduo sem ocupação, ocioso, inativo; vadio, malandro.', 'Gau + dério', '', 13, 'src/img/contribuicoes/cb9e311dea59c0000c3d24a1880f8f7b.jpg', 'Aprovada', 'Bah teu! Agora tá bagual de primeira'),
+	(3, 'Bah', 'bah', 'Expressão', 'Sul do Brasil: exprime surpresa, admiração, espanto.', 'Bah', '', 14, '/src/img/contribuicoes/a465ebf85eccda761251c364036031d2.jpg', 'Aprovada', ''),
 	(4, 'Baita', 'bai.ta', 'Adjetivo', 'Muito brande; imenso, enorme', 'Bai + ta', '', 3, '/src/img/contribuicoes/aaa4690406be33feea5a9a6dabab7706.jpg', 'Em correcao', ''),
-	(5, 'Tchola', 'tcho.la', 'Adjetivo', 'Indivíduo maluco, louco, doido ou de ausência de normalidade que o obriga a cometer ou falar coisas absurdas.', 'Drogas ilícitas + tempo ocioso', '', 3, '/src/img/contribuicoes/bef64ac0f238ae019398d5a2e81dc66d.jpg', 'Em correcao', 'adfasdfasdfsdf'),
-	(6, 'Lombrado', 'lom.bra.do', 'Adjetivo', 'Que ou aquele que está sob o efeito de drogas (ex.: a marijuana deixa o usuário lombrado; foram esses lombrados aí que derrubaram a garrafa).', 'Lom + brado', '', 3, '/src/img/contribuicoes/ddeb30fafa487c343b4ff89ad16ce8c8.jpg', 'Em correcao', 'asdfasdfsf'),
-	(7, 'asdf', 'asdfasd', 'asdf', 'adf', 'asd', 'fasdf', 3, 'src/img/contribuicoes/31f1396cd80bdd7df5ce03b1340d74b8.jpg', 'Aprovada', '');
+	(5, 'Tchola', 'tcho.la', 'Adjetivo', 'Indivíduo maluco, louco, doido ou de ausência de normalidade que o obriga a cometer ou falar coisas absurdas.', 'Drogas ilícitas + tempo ocioso', '', 13, '/src/img/contribuicoes/bef64ac0f238ae019398d5a2e81dc66d.jpg', 'Em correcao', 'adfasdfasdfsdf'),
+	(6, 'Lombrado', 'lom.bra.do', 'Adjetivo', 'Que ou aquele que está sob o efeito de drogas (ex.: a marijuana deixa o usuário lombrado; foram esses lombrados aí que derrubaram a garrafa).', 'Lom + brado', '', 14, '/src/img/contribuicoes/ddeb30fafa487c343b4ff89ad16ce8c8.jpg', 'Em correcao', 'asdfasdfsf'),
+	(7, 'asdf', 'asdfasd', 'asdf', 'adf', 'asd', 'fasdf', 3, 'src/img/contribuicoes/31f1396cd80bdd7df5ce03b1340d74b8.jpg', 'Aprovada', ''),
+	(8, 'adlfkgoau', 'llflasdfyuo ', 'asdufiadnfu', 'lmuasdnyadf', 'adsfvaraeb', 'vgbhjmhklkç~lç~]-9088 7ilop´´[´[´];´~pçlkjh', 13, 'src/img/contribuicoes/81f02b2a93a58bbb39202888cc8bdbb4.jpg', 'Pendente', ''),
+	(9, 'fghj', 'gfdf', 'ghjklk', 'kkjghgfdddf', 'dfgchvjbn', 'nb', 3, 'src/img/contribuicoes/30ca9871935305e950e1a271c5108813.jpg', 'Pendente', '');
 /*!40000 ALTER TABLE `contribuicao` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela dicionario.usuario

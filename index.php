@@ -27,9 +27,9 @@
 
 <?php if ($pesquisa) : ?>
   <?php if ($sem_contribuicoes) : ?>
-    <div class='alert alert-secondary text-center'>Não foram encontrados resultados para "<?php echo $busca ?>"</div>
+    <div class='alert alert-secondary text-center m-0'>Não foram encontrados resultados para "<?php echo $busca ?>"</div>
   <?php else : ?>
-    <h1 class="h2 text-center">Resultados encontrados para "<?php echo $busca ?>"</h1>
+    <h1 class="h2 text-center m-0">Resultados encontrados para "<?php echo $busca ?>"</h1>
 
     <div class="row g-0 gap-3">
       <?php while ($contribuicao = $result->fetch_object()) : ?>

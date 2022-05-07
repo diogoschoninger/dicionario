@@ -85,67 +85,56 @@
   $contribuicao = $result->fetch_object();
 ?>
 
-<h1 class="fs-2 text-center">Corrigir gíria/palavrão</h1>
+<h1 class="fs-2 text-center m-0">Corrigir gíria/palavrão</h1>
 
-<form action="" method="post" class="container" enctype="multipart/form-data">
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Gíria/palavrão</label>
-    <div class="col-10">
-      <input class="form-control" name="contribuicao" required value="<?php if (isset($_POST)) echo $contribuicao->contribuicao ?>" >
+<form class="row g-0 gap-3" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post" enctype="multipart/form-data">
+  <div class="row g-0 gap-3">
+    <div class="row g-0 col-sm">
+      <label>Gíria/palavrão</label>
+      <input class="form-control" name="contribuicao" required value="<?php if (isset($_POST)) echo $contribuicao->contribuicao ?>" />
     </div>
-  </div>
-  
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Silabação</label>
-    <div class="col-10">
-      <input class="form-control" name="silabacao" required value="<?php if (isset($_POST)) echo $contribuicao->silabacao ?>" >
-    </div>
-  </div>
-  
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Classe gramatical</label>
-    <div class="col-10">
-      <input class="form-control" name="classe_gramatical" required value="<?php if (isset($_POST)) echo $contribuicao->classe_gramatical ?>" >
-    </div>
-  </div>
-  
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Significados</label>
-    <div class="col-10">
-      <input class="form-control" name="significados" required value="<?php if (isset($_POST)) echo $contribuicao->significados ?>" >
+    
+    <div class="row g-0 col-sm">
+      <label>Silabação</label>
+      <input class="form-control" name="silabacao" required value="<?php if (isset($_POST)) echo $contribuicao->silabacao ?>" />
     </div>
   </div>
 
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Exemplos de uso</label>
-    <div class="col-10">
-      <input class="form-control" type="file" multiple name="exemplos[]" required>
+  <div class="row g-0 gap-3">
+    <div class="row g-0 col-md">
+      <label>Classe gramatical</label>
+      <input class="form-control" name="classe_gramatical" required value="<?php if (isset($_POST)) echo $contribuicao->classe_gramatical ?>" />
+    </div>
+    
+    <div class="row g-0 col-md">
+      <label>Significados</label>
+      <input class="form-control" name="significados" required value="<?php if (isset($_POST)) echo $contribuicao->significados ?>" />
     </div>
   </div>
 
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Formação da palavra</label>
-    <div class="col-10">
-      <input class="form-control" name="formacao" required value="<?php if (isset($_POST)) echo $contribuicao->formacao ?>" >
-    </div>
+  <div class="row g-0">
+    <label>Exemplos de uso</label>
+    <input class="form-control" type="file" multiple name="exemplos[]" required />
+  </div>
+
+  <div class="row g-0">
+    <label>Formação da palavra</label>
+    <input class="form-control" name="formacao" required value="<?php if (isset($_POST)) echo $contribuicao->formacao ?>" />
   </div>
   
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Comentários</label>
-    <div class="col-10">
-      <textarea class="form-control" name="comentarios"><?php if (isset($_POST)) echo $contribuicao->comentarios ?></textarea>
-    </div>
+  <div class="row g-0">
+    <label>Comentários</label>
+    <textarea class="form-control" name="comentarios"><?php if (isset($_POST)) echo $contribuicao->comentarios ?></textarea>
   </div>
   
-  <div class="row mb-3">
-    <label class="col-form-label col-2">Avaliação do professor</label>
-    <div class="col-10">
-      <textarea class="form-control" disabled readonly><?php if (isset($_POST)) echo $contribuicao->comentarios_avaliador ?></textarea>
+  <div class="row g-0">
+    <label>Avaliação do professor</label>
+    <div class="rounded" style="background-color: rgb(233, 236, 239); padding: 6px 12px; border: 1px solid rgb(206, 212, 218); min-height: 3rem;">
+      <?php if (isset($_POST)) echo $contribuicao->comentarios_avaliador ?>
     </div>
   </div>
 
-  <div class="row justify-content-center">
-    <button type="submit" class="btn btn-primary w-auto">Enviar para correção</button>
+  <button class="btn btn-primary w-auto mx-auto" type="submit">Enviar para correção</button>
   </div>
 </form>
 

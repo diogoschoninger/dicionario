@@ -9,6 +9,7 @@ Encontra-se em uso [neste endereço](http://inf2.fw.iffarroupilha.edu.br/diciona
 ## Log da versão 1.2.5
 - Adição: layout responsivo na página "Avaliar contribuições";
 - Adição: layout responsivo na página "Nova contribuição";
+- Adição: layout responsivo na página "Corrigir contribuição";
 - Correção: removidas margens excedentes dos elementos no /index.php.
 - ### Outros:
   - Adicionados arquivos Bootstrap para desenvolvimento offline.
